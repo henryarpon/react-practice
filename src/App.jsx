@@ -1,12 +1,16 @@
+import Counter from './components/Counter';
 import './App.css'
 
 function App() {
 
+	
 	return (
-		<>
-			<h1>This is a test</h1>
-		</>
-	)
+		<div>
+			<Counter />
+		</div>
+	)	
 }
 
-export default App
+export default App;
+
+
