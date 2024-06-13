@@ -1,39 +1,53 @@
-import { useState } from 'react';
-import Logo from './components/Logo';
-import Form from './components/Form';
-import PackingList from './components/PackingList';
-import Stats from './components/Stats';
-import './App.css'
+import FlashCards from "./components/FlashCards";
+
+const questions = [
+    {
+      id: 3457,
+      question: "What language is React based on?",
+      answer: "JavaScript"
+    },
+    {
+      id: 7336,
+      question: "What are the building blocks of React apps?",
+      answer: "Components"
+    },
+    {
+      id: 8832,
+      question: "What's the name of the syntax we use to describe a UI in React?",
+      answer: "JSX"
+    },
+    {
+      id: 1297,
+      question: "How to pass data from parent to child components?",
+      answer: "Props"
+    },
+    {
+      id: 9103,
+      question: "How to give components memory?",
+      answer: "useState hook"
+    },
+    {
+      id: 2002,
+      question:
+        "What do we call an input element that is completely synchronised with state?",
+      answer: "Controlled element"
+    }
+  ];
 
 function App() {
 
-	const [ description, setDescription ] = useState("");
-    const [ quantity, setQuantity ] = useState(1);
-	const [ items, setItems ] = useState([]);
+    return (
+      <div className="App">
 
-	function handleSubmit(e) {
-        e.preventDefault();
-
-        if(!description) return;
-
-        const newitems = {description, quantity, packed: false, id: Date.now()}
-
-		setItems(prevItems => [...prevItems, newitems]);
-
-        setDescription("");
-        setQuantity(1);
-    }
-
-	return (
-		<div className='app'>
-			<Logo />
-			<Form description={description} quantity={quantity} handleSubmit={handleSubmit} setQuantity={setQuantity} setDescription={setDescription}/>
-			<PackingList items={items}/>
-			<Stats />
-		</div>
-	)	
-}
-
-export default App;
-
-
+			<div className="flashcards">
+                {questions.map(question => (
+                    <FlashCards key={question.id} question={question} />
+                ))}
+            </div>
+		
+      </div>
+    );
+  }
+  
+  export default App;
+  
