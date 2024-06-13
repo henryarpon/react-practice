@@ -2,34 +2,42 @@ import { useState } from "react";
 
 
 function Counter() { 
-    const [ step, setStep ] = useState(1);
+
     const [ count, setCount ] = useState(0);
-
-    function stepDecrement() {
-        setStep( step => step - 1);
-    }
-
-    function stepIncrement() {
-        setStep( step => step + 1);
-    }
+    const [ stepValue, setStepValue ] = useState(1);
+    const [ reset, setReset ] = useState(false);
 
     function decrement() {
-        setCount( count => count - step);
+        setCount( count => count - stepValue);
+        setReset(true);
     }
 
     function increment() {
-        setCount( count => count + step);
+        setCount( count => count + stepValue);
+        setReset(true);
     }
+
+    function handleStepChange(e) {
+        setStepValue(Number(e.target.value));
+        setReset(true);
+    }
+
+    function handleReset() {
+        setStepValue(1);
+        setCount(0);
+        setReset(false);
+    }
+    
 
     const date = new Date("June 10 2024");
     date.setDate(date.getDate() + count);
 
     return (
         <>  
-            <div className="container">
-                <button onClick={stepDecrement}>-</button>
-                <span>Step: {step}</span>
-                <button onClick={stepIncrement}>+</button>
+            <div>
+                <label htmlFor="volume">Volume:</label>
+                <input type="range" id="volume" name="volume" min="0" max="100" value={stepValue} onChange={handleStepChange}></input>
+                <span id="valueDisplay">{stepValue}</span>
             </div>
 
             <div className="container">
@@ -38,16 +46,14 @@ function Counter() {
                 <button onClick={increment}>+</button>
             </div>
 
-            {/* { count === 0 ? <p>Today is {date.toDateString()}</p> : <p>{count} day/s from today is {date.toDateString()}</p>} */}
-
-            {/* <p>
-                <span>{ count === 0 ? <p>Today is </p> : count > 0 ? <p> {count} day/s from today is </p> : <p>{ Math.abs(count) } day/s ago is </p>}</span><span>{date.toDateString()}</span>
-            </p>  */}
             <p>
-    <span>{count === 0 ? 'Today is' : count > 0 ? `${count} day/s from today is` : `${Math.abs(count)} day/s ago is`}</span>
-    <span>{date.toDateString()}</span>
-</p>
+                <span>
+                    {count === 0 ? 'Today is' : count > 0 ? `${count} day/s from today is` : `${Math.abs(count)} day/s ago is`}
+                </span>
+                <span>{date.toDateString()}</span>
+            </p>
 
+            {!reset || <button onClick={handleReset}>Reset</button>}
         </>
       
     )
