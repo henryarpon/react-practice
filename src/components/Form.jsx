@@ -1,10 +1,24 @@
+import { useState } from "react";
 
+function Form({ onAddItems }) {
 
-function Form({description, quantity, handleSubmit, setQuantity, setDescription}) {
-
+    const [ description, setDescription ] = useState("");
+    const [ quantity, setQuantity ] = useState(1);
+    
     const numbers = Array.from({ length: 20 }, (_, i) => i + 1);
 
-    
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        if(!description) return;
+
+        const newitem = {description, quantity, packed: false, id: Date.now()}
+
+        onAddItems(newitem);
+
+        setDescription("");
+        setQuantity(1);
+    }
 
     return (
             <form className="add-form" onSubmit={handleSubmit}>
