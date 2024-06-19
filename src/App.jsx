@@ -1,27 +1,31 @@
-import Accordion from "./components/Accordion";
-
-const faqs = [
-  {
-    title: "Where are these chairs assembled?",
-    text:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium, quaerat temporibus quas dolore provident nisi ut aliquid ratione beatae sequi aspernatur veniam repellendus."
-  },
-  {
-    title: "How long do I have to return my chair?",
-    text:
-      "Pariatur recusandae dignissimos fuga voluptas unde optio nesciunt commodi beatae, explicabo natus."
-  },
-  {
-    title: "Do you ship to countries outside the EU?",
-    text:
-      "Excepturi velit laborum, perspiciatis nemo perferendis reiciendis aliquam possimus dolor sed! Dolore laborum ducimus veritatis facere molestias!"
-  }
-];
+import Bill from "./components/Bill";
+import Tip from "./components/Tip";
+import Result from "./components/Result";
+import { useState } from "react";
 
 export default function App() {
+
+  const [ bill, setBill ] = useState(0);
+  const [ tip1, setTip1 ] = useState(0);
+  const [ tip2, setTip2 ] = useState(0);
+
+  function resetBill() {
+    setBill(0);
+    setTip1(0);
+    setTip2(0);
+  }
+
+
   return (
     <div>
-      <Accordion data={faqs}/>
+        <Bill bill={bill} onBill={setBill}/>
+        <Tip tip={tip1} onTip={setTip1}>How did you like the service?</Tip>
+        <Tip tip={tip2} onTip={setTip2}>How did your friend like the service?</Tip>
+
+        <hr />
+        <Result bill={bill} tip1={tip1} tip2={tip2}/>
+
+        <button onClick={resetBill}>Reset</button>
     </div>
   );
 }
